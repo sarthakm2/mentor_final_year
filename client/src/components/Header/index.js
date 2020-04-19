@@ -14,7 +14,7 @@ function Header(props) {
       <div className="container">
         <div className="row">
           <div className="col-md-12 d-flex aign-items-center justify-content-between">
-            <LinkTo className="h3" text="MCQ Question" to="/" />
+            <LinkTo className="h3" text="MENTOR" to="/" />
             <div className="header-nav d-flex align-items-center justify-content-end">
               <div className="btns">
                 { auth.isAuthenticated ?

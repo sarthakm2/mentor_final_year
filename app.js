@@ -22,6 +22,7 @@ mongoose
 
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/question", require("./routes/question"));
+//app.use("/api/physics", require("./routes/physics"));
 
 if(process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"))

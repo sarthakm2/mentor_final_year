@@ -1,4 +1,4 @@
-import { 
+import {
   SET_QUESTIONS,
   SET_CURRENT_QUESTION,
   SET_CURRENT_INDEX,
@@ -14,15 +14,25 @@ import { axiosHeader } from "../helper/auth";
 /** 
   * @desc Get all questions from database.
 */
-export const loadQuestions = () => (dispatch, getState) => {
+export const loadQuestions = (id) => (dispatch, getState) => {
   dispatch(handleLoading(true))
-  axios.get("/api/question", axiosHeader(getState))
+  axios.get(`/api/question/${id}`, axiosHeader(getState))
     .then(res => {
+      dispatch({
+        type: SET_RESULTS,
+        payload: []
+      });
       dispatch(handleLoading(false));
       dispatch({ type: SET_QUESTIONS, payload: res.data })
     })
     .catch(err => dispatch({ type: CLEAR_QUESTIONS }))
 };
+export const clearres = () => dispatch => {
+  return {
+    type: SET_RESULTS,
+    payload: []
+  }
+}
 
 /** 
   * @desc Set the current question.
@@ -67,25 +77,26 @@ export const setCurrentIndex = index => {
   * are attedned by the user and sends to the backend API.
   * 
 */
-export const submitAnswers = () => (dispatch, getState) => {
+export const submitAnswers = (id) => (dispatch, getState) => {
   let { questions } = getState().questionReducer;
   questions = questions.filter(question => question["answer"]);
   const body = JSON.stringify({ questions })
 
   dispatch(handleLoading(true))
-  axios.post("/api/question/evaluate", body, axiosHeader(getState))
-  .then((res) => {
-    dispatch(handleLoading(false))
-    dispatch(stopTimer());
-    dispatch({
-      type: SET_RESULTS,
-      payload: res.data
+  console.log(id);
+  axios.post(`/api/question/evaluate/${id}`, body, axiosHeader(getState))
+    .then((res) => {
+      dispatch(handleLoading(false))
+      dispatch(stopTimer());
+      dispatch({
+        type: SET_RESULTS,
+        payload: res.data
+      });
+    })
+    .catch((err) => {
+      dispatch(handleLoading(false))
+      console.log(err);
     });
-  })
-  .catch((err) => {
-    dispatch(handleLoading(false))
-    console.log(err);
-  });
 }
 
 

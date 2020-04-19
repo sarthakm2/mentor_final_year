@@ -8,21 +8,16 @@ import UserDetails from "../../components/Questions/UserDetails";
 import Instructions from "../../components/Dialog/Instructions";
 import TimeUp from "../../components/Dialog/TimeUp";
 import { checkTimer } from "../../actions/timerAction";
-import { withRouter } from "react-router-dom";
-import { rerunTest, clearres } from "../../actions/questionAction";
 
-const Dashboard = props => {
+const Physics = props => {
   const { questionReducer, checkTimer } = props;
 
   useEffect(() => {
-    clearres();
     checkTimer();
-  }, [checkTimer, clearres]);
+  }, [checkTimer]);
 
   if (Object.keys(questionReducer.results).length > 0) return <Redirect to="/report" />
-  const { match: { params } } = props;
-  console.log(params)
-  // console.log(params, 'route params')
+
   return (
     <div className="dashboard">
       <Timer />
@@ -30,7 +25,7 @@ const Dashboard = props => {
       <div className="container">
         <div className="row">
           <div className="col-md-8 d-flex align-items-center flex-column">
-            <QuestionsContainer subjectid={params.subjectid} />
+            <QuestionsContainer />
           </div>
           <div className="col-md-4">
             <Controls />
@@ -48,4 +43,4 @@ const mapStateToProps = state => ({
   questionReducer: state.questionReducer
 })
 
-export default connect(mapStateToProps, { checkTimer, clearres })(withRouter(Dashboard));
+export default connect(mapStateToProps, { checkTimer })(Physics);

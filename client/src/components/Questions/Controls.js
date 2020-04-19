@@ -5,7 +5,10 @@ import CheckCircleRounded from '@material-ui/icons/CheckCircleRounded';
 import green from '@material-ui/core/colors/green';
 import blue from '@material-ui/core/colors/blue';
 import grey from '@material-ui/core/colors/grey';
+import { withRouter } from "react-router-dom";
+ 
 import { setCurrentIndex, submitAnswers, setCurrentChoice } from "../../actions/questionAction";
+
 
 function Controls(props) {
   const { questionReducer, setCurrentIndex, submitAnswers, setCurrentChoice } = props;
@@ -16,18 +19,26 @@ function Controls(props) {
     setCurrentIndex(index)
   }
 
+ 
+
+  const { match: { params } } = props;
+ 
+
   return (
+    
     <div className="card controls d-flex flex-column align-items-center">
       <h4>Questions</h4>
+     
+        
       <div className="questions-selector">
         {questions.map((question, index) => {
           return <Fab
-            key={index} 
-            style={{ 
+            key={index}
+            style={{
               backgroundColor: question["answer"] ? green["300"] : grey["50"],
               border: currentIndex === index ? `1px solid ${blue.A200}` : null
             }}
-            size="small" 
+            size="small"
             color="secondary"
             className="index-btn"
             onClick={() => handleClick(index)}
@@ -36,16 +47,18 @@ function Controls(props) {
           </Fab>
         })}
       </div>
-      <Fab 
+      
+}
+      <Fab
         style={{ backgroundColor: green["400"], color: grey["50"], margin: "20px 0" }}
         variant="extended"
         color="secondary"
-        onClick={() => submitAnswers()}
+        onClick={() => submitAnswers(params.subjectid)}
       >
-        <CheckCircleRounded style={{ marginRight: 12 }} />
+        <CheckCircleRounded style={{ marginRight: 6 }} />
         Submit
       </Fab>
-    
+
     </div>
   );
 }
@@ -54,4 +67,4 @@ const mapStateToProps = state => ({
   questionReducer: state.questionReducer
 })
 
-export default connect(mapStateToProps, { setCurrentIndex, submitAnswers, setCurrentChoice })(Controls);
+export default connect(mapStateToProps, { setCurrentIndex, submitAnswers, setCurrentChoice })(withRouter(Controls));

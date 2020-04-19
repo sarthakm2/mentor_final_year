@@ -6,7 +6,7 @@ import {
 } from "../store/types";
 
 const initialState = {
-  timeLeft: 900,
+  timeLeft: 10800,
   isRunning: false
 }
 
@@ -33,7 +33,7 @@ export default function(state = initialState, action) {
     case STOP_TIMER: {
       return {
         ...state,
-        timeLeft: 900,
+        timeLeft: 10800,
         isRunning: false
       }
     }

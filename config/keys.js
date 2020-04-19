@@ -8,8 +8,8 @@ if(process.env.NODE_ENV === "production") {
   }
 } else {
   module.exports = {
-    JWT_SECRET: config.get("JWT_SECRET"),
-    MONGO_URI: config.get("MONGO_URI"),
-    GOOGLE_CLIENT_ID: config.get("GOOGLE_CLIENT_ID"),
+    JWT_SECRET: "json_web_token_secret",
+    MONGO_URI: "mongodb://sarthak2:sarthaKm2@ds215388.mlab.com:15388/mentor",
+    GOOGLE_CLIENT_ID: "jhvbjkbv",
   }
 }
